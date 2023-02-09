@@ -1,8 +1,16 @@
-import { useState } from "react";
-import "./App.css";
+import { useState } from "react"; // {useState} hook을 react 경로로 불러온다.
+import "./App.css"; // css를 불러온다.
 
 const App = () => {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([
+    { id: 1, title: "리액트 공부하기", content: "Todo 추가하기", isDone: true },
+    {
+      id: 2,
+      title: "리액트 공부하기",
+      content: "Todo 삭제/완료하기",
+      isDone: false,
+    }, // item
+  ]);
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -22,7 +30,7 @@ const App = () => {
     // 3. 이놈을 배열에 더한다.
     const newUser = {
       id: users.length + 1,
-      title,
+      title: title,
       content,
       isDone: false, // 미완료 상태이기 때문에
     };
@@ -60,23 +68,42 @@ const App = () => {
           <div>React</div>
         </div>
         <div className="input-style">
-          제목 &nbsp;
-          <input value={title} onChange={titleChangeHandler} />
-          내용 &nbsp;
-          <input value={content} onChange={conChangeHandler} />
-          <button onClick={clickAddButtonHandler}>추가하기</button>
+          <div className="input">
+            <b>제목</b>
+            <input
+              className="add-input"
+              value={title}
+              onChange={titleChangeHandler}
+              required
+            />
+            <b>내용</b>
+            <input
+              className="add-input"
+              value={content}
+              onChange={conChangeHandler}
+            />
+          </div>
+          <div className="button">
+            <button className="add-button" onClick={clickAddButtonHandler}>
+              <b>추가하기</b>
+            </button>
+          </div>
         </div>
         <div className="app-style">
-          Working.. 🔥
+          <b className="font-size">Working.. 🔥</b>
           {users
             .filter((item) => item.isDone == false)
             .map((item) => {
               console.log(item);
               return (
                 <div key={item.id} className="component-style">
-                  {item.title} <br />
+                  <b>{item.title}</b>
+                  <br />
                   {item.content} <br />
-                  <button onClick={() => clickRemoveButtonHandler(item.id)}>
+                  <button
+                    className="delete-botton"
+                    onClick={() => clickRemoveButtonHandler(item.id)}
+                  >
                     삭제하기
                   </button>
                   <button onClick={(e) => clickEditButtonHandler(e, item.id)}>
@@ -85,14 +112,15 @@ const App = () => {
                 </div>
               );
             })}
-          Done..! 🎉
+          <b className="font-size">Done..! 🎉</b>
           {users
             .filter((item) => item.isDone == true)
             .map((item) => {
               console.log(item);
               return (
                 <div key={item.id} className="component-style">
-                  {item.title} <br />
+                  <b>{item.title}</b>
+                  <br />
                   {item.content} <br />
                   <button onClick={() => clickRemoveButtonHandler(item.id)}>
                     삭제하기
